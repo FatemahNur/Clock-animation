@@ -14,3 +14,6 @@ This project is a simple clock animation created using HTML, CSS, and JavaScript
 
 - A web browser (e.g., Chrome, Firefox, Safari)
 - An internet connection to load jQuery from a CDN
+
+# License
+This project is licensed under the MIT License - see the LICENSE file for details.
