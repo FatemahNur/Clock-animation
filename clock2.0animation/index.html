@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clock using Css and JavaScript</title>
+<style>
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #1b1e23;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  color: white;
+}
+
+p {
+  color: #f4eed7;
+  font-size: 0.8em;
+  opacity: 0.75;
+}
+
+.clock {
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.clock__second, .clock__minute, .clock__hour, .clock__indicator {
+  position: absolute;
+  left: calc(50% - 1px);
+  width: 2px;
+  background: #f4eed7;
+  transform-origin: bottom center;
+  z-index: 2;
+  border-radius: 1px;
+}
+.clock__second {
+  height: 90px;
+  margin-top: 10px;
+  background: #4b9aaa;
+  -webkit-animation: time 60s infinite steps(60);
+          animation: time 60s infinite steps(60);
+  z-index: 3;
+}
+.clock__minute {
+  height: 80px;
+  margin-top: 20px;
+  opacity: 0.75;
+  -webkit-animation: time 3600s linear infinite;
+          animation: time 3600s linear infinite;
+}
+.clock__hour {
+  height: 60px;
+  margin-top: 40px;
+  -webkit-animation: time 43200s linear infinite;
+          animation: time 43200s linear infinite;
+}
+.clock__indicator {
+  height: 98px;
+  border-top: 2px solid #4b9aaa;
+  background: none;
+}
+.clock__indicator:nth-of-type(5n) {
+  opacity: 1;
+  height: 93px;
+  border-top: 7px solid #f4eed7;
+}
+.clock__axis {
+  background: #4b9aaa;
+  width: 5px;
+  height: 5px;
+  border-radius: 3px;
+  position: absolute;
+  z-index: 4;
+  top: 97px;
+}
+
+section:nth-of-type(1) {
+  transform: rotateZ(calc(6deg * 1));
+}
+
+/* Repeat the above rule for each section up to 60 */
+
+@-webkit-keyframes time {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes time {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+</style>
+</head>
+<body>
+<div class="clock">
+<div class="clock__second"></div>
+<div class="clock__minute"></div>
+<div class="clock__hour"></div>
+<div class="clock__axis"></div>
+<section class="clock__indicator"></section>
+<section class="clock__indicator"></section>
+<!-- Repeat the above line for each indicator up to 60 -->
+</div>
+<script>
+var currentSec = getSecondsToday();
+var seconds = (currentSec / 60) % 1;
+var minutes = (currentSec / 3600) % 1;
+var hours = (currentSec / 43200) % 1;
+setTime(60 * seconds, "second");
+setTime(3600 * minutes, "minute");
+setTime(43200 * hours, "hour");
+function setTime(left, hand) {
+  document.querySelector(".clock__" + hand).style.animationDelay = left * -1 + "s";
+}
+function getSecondsToday() {
+    let now = new Date();
+    let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    let diff = now - today;
+    return Math.round(diff / 1000); // Convert milliseconds to seconds
+  }
+</script>
+</body>
+</html>
